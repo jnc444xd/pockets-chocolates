@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 export default {
     expo: {
         name: "Pockets Chocolates",
@@ -8,8 +10,17 @@ export default {
         scheme: "pockets-chocolates",
         userInterfaceStyle: "automatic",
         newArchEnabled: true,
+        updates: {
+            fallbackToCacheTimeout: 0
+        },
+        assetBundlePatterns: ["**/*"],
         ios: {
+            bundleIdentifier: "com.pocketschocolates.tracer",
             supportsTablet: true,
+            googleServicesFile: "./GoogleService-Info.plist",
+            infoPlist: {
+                UIBackgroundModes: ["remote-notification"],
+            }
         },
         android: {
             adaptiveIcon: {
@@ -33,6 +44,15 @@ export default {
                     backgroundColor: "#ffffff",
                 },
             ],
+            "@react-native-firebase/app",
+            [
+                "expo-build-properties",
+                {
+                    ios: {
+                        useFrameworks: "static"
+                    }
+                }
+            ]
         ],
         experiments: {
             typedRoutes: true,
@@ -42,7 +62,15 @@ export default {
                 origin: false,
             },
             eas: {
-                projectId: "422197ce-194f-4b20-9abd-c17bae94c6f4",
+                projectId: process.env.EXPO_PROJECT_ID,
+            },
+            firebaseConfig: {
+                apiKey: process.env.FIREBASE_API_KEY,
+                authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+                projectId: process.env.FIREBASE_PROJECT_ID,
+                storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+                messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+                appId: process.env.FIREBASE_APP_ID
             },
         },
         owner: "jnc444xd",
